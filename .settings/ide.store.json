@@ -1,0 +1,7 @@
+{
+  "board": "NUCLEO-U083RC",
+  "device": "STM32U083RCT6",
+  "core": "Cortex-M0+",
+  "order": 0,
+  "toolchain": "GCC"
+}
