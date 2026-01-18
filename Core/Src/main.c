@@ -100,10 +100,11 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  // TIM2의 PWM 채널 1을 시작합니다.
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+
   /* USER CODE END 2 */
 
-  /* Initialize leds */
-  BSP_LED_Init(LED_GREEN);
 
   /* Initialize USER push-button, will be used to trigger an interrupt each time it's pressed.*/
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
@@ -123,9 +124,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    printf("hello world\r\n");
-    BSP_LED_Toggle(LED_GREEN);
-    HAL_Delay(100);
+    // LED 밝기를 서서히 증가시킵니다.
+    for (uint32_t i = 0; i < 1000; i++)
+    {
+      __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, i);
+      HAL_Delay(1); // 1ms 지연
+    }
+
+    // LED 밝기를 서서히 감소시킵니다.
+    for (uint32_t i = 1000; i > 0; i--)
+    {
+      __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, i);
+      HAL_Delay(1); // 1ms 지연
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
